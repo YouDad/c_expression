@@ -28,12 +28,12 @@ identifier    ({alpha}({alpha}|{digit})*)
 
 "++" {
 	yylval.str = yytext;
-	return PLUSPLUS;
+	return OP_INC;
 }
 
 "--" {
 	yylval.str = yytext;
-	return MINUSMINUS;
+	return OP_DEC;
 }
 
 ">>" {

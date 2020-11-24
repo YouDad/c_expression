@@ -7,8 +7,7 @@
 
 %token<op>  '+' '-' '=' '(' ')'
 %token<op>  '!' '~'
-%token<str> PLUSPLUS MINUSMINUS
-%token<str> OP_LSL OP_LSR
+%token<str> OP_INC OP_DEC OP_LSL OP_LSR
 %token<op>  '*' '/' '%'
 
 %type<integer> expression
@@ -18,7 +17,7 @@
 %left OP_LSL OP_LSR
 %left '+' '-'
 %left '*' '/' '%'
-%right '!' '~' PLUSPLUS MINUSMINUS
+%right '!' '~' OP_INC OP_DEC
 %left '(' ')'
 
 %%
@@ -84,11 +83,11 @@ expression: '~' expression {
 	$$ = ~$2;
 	printf("%s, %d: %c %d\n", __FILE__, __LINE__, $1, $2);
 };
-expression: PLUSPLUS IDENTIFIER {
+expression: OP_INC IDENTIFIER {
 	$$ = ++variables[$2];
 	printf("%s, %d: %s %s\n", __FILE__, __LINE__, $1.c_str(), $2.c_str());
 };
-expression: MINUSMINUS IDENTIFIER {
+expression: OP_DEC IDENTIFIER {
 	$$ = --variables[$2];
 	printf("%s, %d: %s %s\n", __FILE__, __LINE__, $1.c_str(), $2.c_str());
 };
