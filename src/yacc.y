@@ -13,11 +13,13 @@
 %token<str> OP_AND OP_OR
 %token<op>  '*' '/' '%'
 %token<op>  '&' '^' '|'
+%token<op>  '?' ':'
 
 %type<integer> expression
 %type<integer> statement
 
 %right '='
+%right '?' ':'
 %left OP_OR
 %left OP_AND
 %left '|'
@@ -43,6 +45,10 @@ expression: IDENTIFIER '=' expression {
 	variables[$1] = $3;
 	$$ = $3;
 	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
+};
+expression: expression '?' expression ':' expression {
+	$$ = $1 ? $3 : $5;
+	printf("%s, %d: %d %c %d %c %d\n", __FILE__, __LINE__, $1, $2, $3, $4, $5);
 };
 expression: expression OP_AND expression {
 	$$ = $1 && $3;

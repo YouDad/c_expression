@@ -86,7 +86,7 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return OP_OR;
 }
 
-([()+*/%=!~&^|-]) {
+([()+*/%=!~&^|?:-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
 }
