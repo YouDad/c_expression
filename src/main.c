@@ -1,7 +1,22 @@
 #include "header.h"
 
-int main() {
-	log::set_level(log::LL_DEBUG);
+int main(int argc, char **argv) {
+	for (int i = 1; i < argc; i++) {
+		if (strstr(argv[i], "-v")) {
+			int level = 0;
+			for (char *p = argv[i]; *p; p++) {
+				if (*p == 'v') {
+					level++;
+				}
+			}
+
+			if (level > log::LL_DEBUG) {
+				level = log::LL_DEBUG;
+			}
+
+			log::set_level((log::LOG_LEVEL)level);
+		}
+	}
 
 	char buf[1 << 12];
 	while (1) {
