@@ -3,7 +3,7 @@ default: compile
 
 .PHONY: compile
 compile: lex yacc $(objs)
-	$(CC) $(CPPFLAGS) main.c $(objs) -o cly
+	$(CC) $(CPPFLAGS) main.c $(objs) -o c_expression
 
 .PHONY: lex
 lex:
@@ -18,4 +18,4 @@ yacc:
 
 .PHONY: install
 install:
-	mv cly $(OUTDIR)/
+	mv c_expression $(OUTDIR)/

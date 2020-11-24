@@ -1,26 +1,23 @@
-[TOC]
+# c_expression
 
-# lex yacc 练习
-
-练习仓库，lex是词法分析器，yacc是语法分析器。
+c_expression: C语言表达式解析
 
 ## 使用方法
 
-(cly: c++ lex yacc)
 ```shell
-make       # 编译
-./cly      # 运行运算
-make test  # 运行测试
-./cly -vvv # 以DEBUG模式运行运算
+make                # 编译，第一次编译会有错误，再来一次即可
+./c_expression      # 运行运算
+make test           # 运行测试
+./c_expression -vvv # 以DEBUG模式运行运算
 ```
 
-cly的功能：
+c_expression的功能：
 - 支持C语言的大部分运算符
 - 拥有变量存储的功能
 - 捕获除0异常
 - ERROR/WARN/INFO/DEBUG，0~3级运行log输出
 
-cly的使用方法：
+c_expression的使用方法：
 ```shell
 calc > 1
 INTEGER 1

@@ -30,7 +30,7 @@ test: src
 
 .PHONY: install
 install:
-	mv $(OUTDIR)/cly ./cly
+	mv $(OUTDIR)/c_expression ./c_expression
 
 .PHONY: clean
 clean:
