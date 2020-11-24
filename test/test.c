@@ -67,5 +67,16 @@ int main()
 	ret = ret && test("c%3", -2, 0);
 	ret = ret && test("c%3 + 2", 0, 0);
 	ret = ret && test("c%~1 + 2", 2, 0);
+
+	// <<, >>
+	ret = ret && test("1<<0", 1 << 0, 0);
+	ret = ret && test("1<<20", 1 << 20, 0);
+	ret = ret && test("100>>0", 100 >> 0, 0);
+	ret = ret && test("100>>4", 100 >> 4, 0);
+
+	ret = ret && test("c = 1<<0", 1 << 0, 0);
+	ret = ret && test("c + 1<<20", 2 << 20, 0);
+	ret = ret && test("c + 100>>0", 101 >> 0, 0);
+	ret = ret && test("c = 100>>4", 100 >> 4, 0);
 	return ret ? 0 : 1;
 }

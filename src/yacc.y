@@ -8,12 +8,14 @@
 %token<op>  '+' '-' '=' '(' ')'
 %token<op>  '!' '~'
 %token<str> PLUSPLUS MINUSMINUS
+%token<str> OP_LSL OP_LSR
 %token<op>  '*' '/' '%'
 
 %type<integer> expression
 %type<integer> statement
 
 %right '='
+%left OP_LSL OP_LSR
 %left '+' '-'
 %left '*' '/' '%'
 %right '!' '~' PLUSPLUS MINUSMINUS
@@ -31,6 +33,14 @@ expression: IDENTIFIER '=' expression {
 	variables[$1] = $3;
 	$$ = $3;
 	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
+};
+expression: expression OP_LSL expression {
+	$$ = $1 << $3;
+	printf("%s, %d: %d %s %d\n", __FILE__, __LINE__, $1, $2.c_str(), $3);
+};
+expression: expression OP_LSR expression {
+	$$ = $1 >> $3;
+	printf("%s, %d: %d %s %d\n", __FILE__, __LINE__, $1, $2.c_str(), $3);
 };
 expression: expression '+' expression {
 	$$ = $1 + $3;

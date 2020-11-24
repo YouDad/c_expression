@@ -36,6 +36,16 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return MINUSMINUS;
 }
 
+">>" {
+	yylval.str = yytext;
+	return OP_LSR;
+}
+
+"<<" {
+	yylval.str = yytext;
+	return OP_LSL;
+}
+
 ([()+*/%=!~-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
