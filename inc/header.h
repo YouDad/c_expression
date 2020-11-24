@@ -8,6 +8,7 @@
 
 #include "types.h"
 #include "yacc.tab.h"
+#include "modules/log.h"
 
 extern "C" {
 	void yyerror(const char *s);

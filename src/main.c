@@ -1,7 +1,8 @@
 #include "header.h"
 
-
 int main() {
+	log::set_level(log::LL_DEBUG);
+
 	char buf[1 << 12];
 	while (1) {
 		printf("calc > ");

@@ -13,21 +13,23 @@ bool _test(const char *calc, int calc_len, int calc_result, int retval, int line
 	fclose(yyin);
 
 	if (ret != retval) {
-		printf("%d: ret(%d) != retval(%d)\n", line, ret, retval);
+		log::warn("%d: ret(%d) != retval(%d)", line, ret, retval);
 		return false;
 	}
 
 	if (calc_result != result) {
-		printf("%d: test_result(%d) != result(%d)\n", line, calc_result, result);
+		log::warn("%d: test_result(%d) != result(%d)", line, calc_result, result);
 		return false;
 	}
 
-	printf("%d: pass\n", line);
+	log::info("%d: pass\n", line);
 	return true;
 }
 
 int main()
 {
+	log::set_level(log::LL_DEBUG);
+
 	bool ret = true;
 	int a, b, c;
 	ret = ret && test(0);
