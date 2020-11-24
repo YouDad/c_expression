@@ -26,7 +26,17 @@ identifier    ({alpha}({alpha}|{digit})*)
 	BEGIN COMMENT;
 }
 
-([()+*/=-]) {
+"++" {
+	yylval.str = yytext;
+	return PLUSPLUS;
+}
+
+"--" {
+	yylval.str = yytext;
+	return MINUSMINUS;
+}
+
+([()+*/=!~-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
 }

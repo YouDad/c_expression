@@ -5,7 +5,9 @@
 %token<str>IDENTIFIER
 %token<integer>INTEGER
 
-%token<op>'+' '-' '*' '/' '=' '(' ')'
+%token<op>  '+' '-' '*' '/' '=' '(' ')'
+%token<op>  '!' '~'
+%token<str> PLUSPLUS MINUSMINUS
 
 %type<integer> expression
 %type<integer> statement
@@ -13,6 +15,7 @@
 %right '='
 %left '+' '-'
 %left '*' '/'
+%right '!' '~' PLUSPLUS MINUSMINUS
 %left '(' ')'
 
 %%
@@ -50,7 +53,27 @@ expression: expression '/' expression {
 	}
 	printf("%s, %d: %d %c %d\n", __FILE__, __LINE__, $1, $2, $3);
 };
-expression: '-' expression {
+expression: '!' expression {
+	$$ = !$2;
+	printf("%s, %d: %c %d\n", __FILE__, __LINE__, $1, $2);
+};
+expression: '~' expression {
+	$$ = ~$2;
+	printf("%s, %d: %c %d\n", __FILE__, __LINE__, $1, $2);
+};
+expression: PLUSPLUS IDENTIFIER {
+	$$ = ++variables[$2];
+	printf("%s, %d: %s %s\n", __FILE__, __LINE__, $1.c_str(), $2.c_str());
+};
+expression: MINUSMINUS IDENTIFIER {
+	$$ = --variables[$2];
+	printf("%s, %d: %s %s\n", __FILE__, __LINE__, $1.c_str(), $2.c_str());
+};
+expression: '+' expression %prec '!' {
+	$$ = $2;
+	printf("%s, %d: %c %d\n", __FILE__, __LINE__, $1, $2);
+};
+expression: '-' expression %prec '!' {
 	$$ = -$2;
 	printf("%s, %d: %c %d\n", __FILE__, __LINE__, $1, $2);
 };

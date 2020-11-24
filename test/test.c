@@ -42,5 +42,22 @@ int main()
 	ret = ret && test("c=-a", -2, 0);
 	ret = ret && test("c", -2, 0);
 	ret = ret && test("(a+b)/(c)", -3, 0);
+
+	// !, +, -, ~, ++, --
+	ret = ret && test("!2", 0, 0);
+	ret = ret && test("!+2", 0, 0);
+	ret = ret && test("!-2", 0, 0);
+	ret = ret && test("!0", 1, 0);
+	ret = ret && test("~0", -1, 0);
+	ret = ret && test("++c", -1, 0);
+	ret = ret && test("--c", -2, 0);
+
+	ret = ret && test("!2 * 0", 0, 0);
+	ret = ret && test("!+2 * 0", 0, 0);
+	ret = ret && test("!-2 * 0", 0, 0);
+	ret = ret && test("!0 + 1", 2, 0);
+	ret = ret && test("~1 + 1", -1, 0);
+	ret = ret && test("++c + 1", 0, 0);
+	ret = ret && test("--c + 1", -1, 0);
 	return ret ? 0 : 1;
 }
