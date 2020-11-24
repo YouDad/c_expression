@@ -76,7 +76,7 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return OP_NE;
 }
 
-([()+*/%=!~-]) {
+([()+*/%=!~&^|-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
 }
