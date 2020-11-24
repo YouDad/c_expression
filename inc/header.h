@@ -1,9 +1,11 @@
 #ifndef HEADER_H_
 #define HEADER_H_
 
-#include <map>
 #include <stdio.h>
 #include <string.h>
+
+#include <map>
+
 #include "types.h"
 #include "yacc.tab.h"
 
@@ -14,5 +16,7 @@ extern "C" {
 }
 
 extern std::map<std::string, int> variables;
+extern FILE *yyin;
+extern int result;
 
 #endif

@@ -1,24 +1,37 @@
+export
 CC := g++
+CPPFLAGS := -g
+CPPFLAGS += -O3
+CPPFLAGS += -std=c++11
+CPPFLAGS += -I$(CURDIR)/inc/
+CPPFLAGS += -I$(CURDIR)/out/
 
-.PHONY: cly
+OUTDIR := $(CURDIR)/out
+objs := $(patsubst %.c, %.o, $(wildcard $(CURDIR)/src/*/*.c))
+objs += $(patsubst %.cpp, %.o, $(wildcard $(CURDIR)/src/*/*.cpp))
+objs += $(patsubst %.c, %.o, $(wildcard $(CURDIR)/out/*.c))
+objs += $(patsubst %.cpp, %.o, $(wildcard $(CURDIR)/out/*.cpp))
 
-cly: lex.yy.c yacc.tab.c obj
-	g++ -g *.o -o cly
+.PHONY: default
+default: src install
 	make clean
 
-.PHONY: obj
+.PHONY: src
+src:
+	[ -e $(OUTDIR) ] || mkdir -p $(OUTDIR)
+	make -C src/
+	make install -C src/
 
-obj: lex.yy.o yacc.tab.o grammer.o lexical.o
+.PHONY: test
+test: src
+	make -C test/
+	make install -C test/
+	make clean
 
-lex.yy.c: lex.l
-	flex lex.l
+.PHONY: install
+install:
+	mv $(OUTDIR)/cly ./cly
 
-yacc.tab.c: yacc.y
-	bison -Wcex -d yacc.y
-
+.PHONY: clean
 clean:
-	rm -f lex.yy.c
-	rm -f yacc.tab.c
-	rm -f yacc.tab.h
-	rm -f yacc.c
-	rm -f *.o
+	-find -name "*.o" | xargs rm -f

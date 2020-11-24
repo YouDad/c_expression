@@ -1,12 +1,5 @@
 #include "header.h"
 
-std::map<std::string, int> variables;
-
-void yyerror(const char *s) {
-	printf("error: %s\n", s);
-}
-
-extern FILE *yyin;
 
 int main() {
 	char buf[1 << 12];
@@ -19,8 +12,14 @@ int main() {
 		}
 
 		yyin = fmemopen(buf, sizeof(buf), "r");
-		yyparse();
+		int parse_ret = yyparse();
 		fclose(yyin);
+
+		if (parse_ret) {
+			printf("occur error!\n\n");
+		} else {
+			printf("calc result: %d\n\n", result);
+		}
 	}
 	return 0;
 }

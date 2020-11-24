@@ -8,8 +8,7 @@
 %token<op>'+' '-' '*' '/' '=' '(' ')'
 
 %type<integer> expression
-%type<str> statement
-%type file
+%type<integer> statement
 
 %right '='
 %left '+' '-'
@@ -18,18 +17,17 @@
 
 %%
 
-file: statement {
-	printf("%s, %d: over %s (%d)\n", __FILE__, __LINE__, $1.c_str(), variables[$1]);
-};
-
-statement: IDENTIFIER '=' expression {
-	variables[$1] = $3;
-	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
-};
 statement: expression {
+	$$ = $1;
+	result = $$;
 	printf("%s, %d: statement %d\n", __FILE__, __LINE__, $1);
 };
 
+expression: IDENTIFIER '=' expression {
+	variables[$1] = $3;
+	$$ = $3;
+	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
+};
 expression: expression '+' expression {
 	$$ = $1 + $3;
 	printf("%s, %d: %d %c %d\n", __FILE__, __LINE__, $1, $2, $3);
@@ -46,6 +44,7 @@ expression: expression '/' expression {
 	if ($3 == 0) {
 		printf("%s, %d: div 0 error\n", __FILE__, __LINE__);
 		$$ = 0;
+		return 1;
 	} else {
 		$$ = $1 / $3;
 	}
