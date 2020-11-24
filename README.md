@@ -8,76 +8,45 @@
 
 (cly: c++ lex yacc)
 ```shell
-make     # 编译
-./cly    # 运行，四则运算
+make       # 编译
+./cly      # 运行运算
+make test  # 运行测试
+./cly -vvv # 以DEBUG模式运行运算
 ```
 
 cly的功能：
-- 带括号的四则运算
+- 支持C语言的大部分运算符
 - 拥有变量存储的功能
 - 捕获除0异常
+- ERROR/WARN/INFO/DEBUG，0~3级运行log输出
 
 cly的使用方法：
 ```shell
-calc > 1+1*4
-yacc.y, 64: 1
-yacc.y, 64: 1
-yacc.y, 64: 4
-yacc.y, 43: 1 * 4
+calc > 1
+INTEGER 1
+statement 1
+calc result: 1
 
-yacc.y, 35: 1 + 4
-yacc.y, 30: statement 5
-yacc.y, 22: over  (0)
-calc > a=3
-yacc.y, 64: 3
+calc > a=1
+INTEGER 1
+a = 1
+statement 1
+calc result: 1
 
-yacc.y, 27: a = 3
-yacc.y, 22: over a (3)
-calc > b=a/2
-yacc.y, 68: IDENTIFIER a 3
-yacc.y, 64: 2
-yacc.y, 52: 3 / 2
+calc > a+3
+IDENTIFIER get a, val = 1
+INTEGER 3
+1 + 3
+statement 4
+calc result: 4
 
-yacc.y, 27: b = 1
-yacc.y, 22: over b (1)
-calc > b * (9 ) / 2 - 7
-yacc.y, 68: IDENTIFIER b 1
-yacc.y, 64: 9
-yacc.y, 60: ( 9 )
-yacc.y, 43: 1 * 9
-yacc.y, 64: 2
-yacc.y, 52: 9 / 2
-yacc.y, 64: 7
+calc > a<<7
+IDENTIFIER get a, val = 1
+INTEGER 7
+1 << 7
+statement 128
+calc result: 128
 
-yacc.y, 39: 4 - 7
-yacc.y, 30: statement -3
-yacc.y, 22: over b (1)
-calc > c=d+1
-yacc.y, 68: IDENTIFIER d 0
-yacc.y, 64: 1
-
-yacc.y, 35: 0 + 1
-yacc.y, 27: c = 1
-yacc.y, 22: over c (1)
-calc > d
-
-yacc.y, 68: IDENTIFIER d 0
-yacc.y, 30: statement 0
-yacc.y, 22: over d (0)
-calc > (a+b)/(c*d)
-yacc.y, 68: IDENTIFIER a 3
-yacc.y, 68: IDENTIFIER b 1
-yacc.y, 35: 3 + 1
-yacc.y, 60: ( 4 )
-yacc.y, 68: IDENTIFIER c 1
-yacc.y, 68: IDENTIFIER d 0
-yacc.y, 43: 1 * 0
-yacc.y, 60: ( 0 )
-yacc.y, 47: div 0 error
-yacc.y, 52: 4 / 0
-
-yacc.y, 30: statement 0
-yacc.y, 22: over d (0)
 calc >
 ```
 
