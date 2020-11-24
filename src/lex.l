@@ -9,6 +9,7 @@ alpha         ([A-Za-z_])
 
 integer       ({digit}+)
 identifier    ({alpha}({alpha}|{digit})*)
+op_assign     (([+*/%&|^-]|<<|>>)=)
 
 %%
 
@@ -84,6 +85,11 @@ identifier    ({alpha}({alpha}|{digit})*)
 "||" {
 	yylval.str = yytext;
 	return OP_OR;
+}
+
+{op_assign} {
+	yylval.str = yytext;
+	return OP_ASSIGN;
 }
 
 ([()+*/%=!~&^|?:-]) {

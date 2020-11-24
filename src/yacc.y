@@ -14,11 +14,12 @@
 %token<op>  '*' '/' '%'
 %token<op>  '&' '^' '|'
 %token<op>  '?' ':'
+%token<str> OP_ASSIGN
 
 %type<integer> expression
 %type<integer> statement
 
-%right '='
+%right '=' OP_ASSIGN
 %right '?' ':'
 %left OP_OR
 %left OP_AND
@@ -45,6 +46,64 @@ expression: IDENTIFIER '=' expression {
 	variables[$1] = $3;
 	$$ = $3;
 	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
+};
+expression: IDENTIFIER OP_ASSIGN expression {
+	switch ($2[0]) {
+		case '+':
+			variables[$1] += $3;
+			break;
+
+		case '-':
+			variables[$1] -= $3;
+			break;
+
+		case '*':
+			variables[$1] *= $3;
+			break;
+
+		case '/':
+			if ($3 == 0) {
+				printf("%s, %d: div 0 error\n", __FILE__, __LINE__);
+				$$ = 0;
+				result = $$;
+				return 1;
+			}
+			variables[$1] /= $3;
+			break;
+
+		case '%':
+			if ($3 == 0) {
+				printf("%s, %d: div 0 error\n", __FILE__, __LINE__);
+				$$ = 0;
+				result = $$;
+				return 1;
+			}
+			variables[$1] %= $3;
+			break;
+
+		case '&':
+			variables[$1] &= $3;
+			break;
+
+		case '|':
+			variables[$1] |= $3;
+			break;
+
+		case '^':
+			variables[$1] ^= $3;
+			break;
+
+		case '<':
+			variables[$1] <<= $3;
+			break;
+
+		case '>':
+			variables[$1] >>= $3;
+			break;
+
+	}
+	$$ = variables[$1];
+	printf("%s, %d: %s %s %d\n", __FILE__, __LINE__, $1.c_str(), $2.c_str(), $3);
 };
 expression: expression '?' expression ':' expression {
 	$$ = $1 ? $3 : $5;
