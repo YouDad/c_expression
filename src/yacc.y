@@ -5,16 +5,17 @@
 %token<str>IDENTIFIER
 %token<integer>INTEGER
 
-%token<op>  '+' '-' '*' '/' '=' '(' ')'
+%token<op>  '+' '-' '=' '(' ')'
 %token<op>  '!' '~'
 %token<str> PLUSPLUS MINUSMINUS
+%token<op>  '*' '/' '%'
 
 %type<integer> expression
 %type<integer> statement
 
 %right '='
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 %right '!' '~' PLUSPLUS MINUSMINUS
 %left '(' ')'
 
@@ -47,9 +48,21 @@ expression: expression '/' expression {
 	if ($3 == 0) {
 		printf("%s, %d: div 0 error\n", __FILE__, __LINE__);
 		$$ = 0;
+		result = $$;
 		return 1;
 	} else {
 		$$ = $1 / $3;
+	}
+	printf("%s, %d: %d %c %d\n", __FILE__, __LINE__, $1, $2, $3);
+};
+expression: expression '%' expression {
+	if ($3 == 0) {
+		printf("%s, %d: div 0 error\n", __FILE__, __LINE__);
+		$$ = 0;
+		result = $$;
+		return 1;
+	} else {
+		$$ = $1 % $3;
 	}
 	printf("%s, %d: %d %c %d\n", __FILE__, __LINE__, $1, $2, $3);
 };

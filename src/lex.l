@@ -36,7 +36,7 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return MINUSMINUS;
 }
 
-([()+*/=!~-]) {
+([()+*/%=!~-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
 }

@@ -59,5 +59,13 @@ int main()
 	ret = ret && test("~1 + 1", -1, 0);
 	ret = ret && test("++c + 1", 0, 0);
 	ret = ret && test("--c + 1", -1, 0);
+
+	// %
+	ret = ret && test("1%2", 1, 0);
+	ret = ret && test("3%2", 1, 0);
+	ret = ret && test("3%0", 0, 1);
+	ret = ret && test("c%3", -2, 0);
+	ret = ret && test("c%3 + 2", 0, 0);
+	ret = ret && test("c%~1 + 2", 2, 0);
 	return ret ? 0 : 1;
 }
