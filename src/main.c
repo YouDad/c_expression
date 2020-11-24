@@ -16,8 +16,10 @@ int main() {
 		int parse_ret = yyparse();
 		fclose(yyin);
 
-		if (parse_ret) {
+		if (parse_ret == 1) {
 			printf("occur error!\n\n");
+		} else if (parse_ret == 2) {
+			printf("\n");
 		} else {
 			printf("calc result: %d\n\n", result);
 		}

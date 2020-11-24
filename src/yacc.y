@@ -36,6 +36,10 @@
 
 %%
 
+statement: {
+	return 2;
+}
+
 statement: expression {
 	$$ = $1;
 	result = $$;

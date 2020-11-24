@@ -97,6 +97,7 @@ op_assign     (([+*/%&|^-]|<<|>>)=)
 	return yytext[0];
 }
 
+"\n" {}
 . {}
 
 <COMMENT>\n {
