@@ -78,5 +78,21 @@ int main()
 	ret = ret && test("c + 1<<20", 2 << 20, 0);
 	ret = ret && test("c + 100>>0", 101 >> 0, 0);
 	ret = ret && test("c = 100>>4", 100 >> 4, 0);
+
+	// <, <=, >, >=
+	ret = ret && test("1 < 1", 1 < 1, 0);
+	ret = ret && test("1 <= 1", 1 <= 1, 0);
+	ret = ret && test("1 > 1", 1 > 1, 0);
+	ret = ret && test("1 >= 1", 1 >= 1, 0);
+
+	ret = ret && test("1 << 1 < 1", 1 << 1 < 1, 0);
+	ret = ret && test("1 << 1 <= 1", 1 << 1 <= 1, 0);
+	ret = ret && test("1 << 1 > 1", 1 << 1 > 1, 0);
+	ret = ret && test("1 << 1 >= 1", 1 << 1 >= 1, 0);
+
+	ret = ret && test("c = 1 < 1", 1 < 1, 0);
+	ret = ret && test("c = 1 <= 1", 1 <= 1, 0);
+	ret = ret && test("c = 1 > 1", 1 > 1, 0);
+	ret = ret && test("c = 1 >= 1", 1 >= 1, 0);
 	return ret ? 0 : 1;
 }

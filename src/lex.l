@@ -46,6 +46,26 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return OP_LSL;
 }
 
+"<" {
+	yylval.str = yytext;
+	return OP_LT;
+}
+
+"<=" {
+	yylval.str = yytext;
+	return OP_LE;
+}
+
+">" {
+	yylval.str = yytext;
+	return OP_GT;
+}
+
+">=" {
+	yylval.str = yytext;
+	return OP_GE;
+}
+
 ([()+*/%=!~-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
