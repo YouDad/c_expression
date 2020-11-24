@@ -9,12 +9,14 @@
 %token<op>  '!' '~'
 %token<str> OP_INC OP_DEC OP_LSL OP_LSR
 %token<str> OP_LT OP_LE OP_GT OP_GE
+%token<str> OP_EQ OP_NE
 %token<op>  '*' '/' '%'
 
 %type<integer> expression
 %type<integer> statement
 
 %right '='
+%left OP_EQ OP_NE
 %left OP_LT OP_LE OP_GT OP_GE
 %left OP_LSL OP_LSR
 %left '+' '-'
@@ -34,6 +36,14 @@ expression: IDENTIFIER '=' expression {
 	variables[$1] = $3;
 	$$ = $3;
 	printf("%s, %d: %s %c %d\n", __FILE__, __LINE__, $1.c_str(), $2, $3);
+};
+expression: expression OP_EQ expression {
+	$$ = $1 == $3;
+	printf("%s, %d: %d %s %d\n", __FILE__, __LINE__, $1, $2.c_str(), $3);
+};
+expression: expression OP_NE expression {
+	$$ = $1 != $3;
+	printf("%s, %d: %d %s %d\n", __FILE__, __LINE__, $1, $2.c_str(), $3);
 };
 expression: expression OP_LT expression {
 	$$ = $1 < $3;

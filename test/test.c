@@ -94,5 +94,14 @@ int main()
 	ret = ret && test("c = 1 <= 1", 1 <= 1, 0);
 	ret = ret && test("c = 1 > 1", 1 > 1, 0);
 	ret = ret && test("c = 1 >= 1", 1 >= 1, 0);
+
+	// ==, !=
+	ret = ret && test("1 == 1", 1 == 1, 0);
+	ret = ret && test("1 != 1", 1 != 1, 0);
+
+	ret = ret && test("1 << 1 == 1", 1 << 1 == 1, 0);
+	ret = ret && test("1 << 1 != 1", 1 << 1 != 1, 0);
+	ret = ret && test("c = 1 == 1", 1 == 1, 0);
+	ret = ret && test("c = 1 != 1", 1 != 1, 0);
 	return ret ? 0 : 1;
 }

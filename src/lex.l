@@ -66,6 +66,16 @@ identifier    ({alpha}({alpha}|{digit})*)
 	return OP_GE;
 }
 
+"==" {
+	yylval.str = yytext;
+	return OP_EQ;
+}
+
+"!=" {
+	yylval.str = yytext;
+	return OP_NE;
+}
+
 ([()+*/%=!~-]) {
 	yylval.op = yytext[0];
 	return yytext[0];
