@@ -120,5 +120,29 @@ int main()
 	ret = ret && test("1 ^ 3 & 2", 1 ^ 3 & 2, 0);
 	ret = ret && test("4 | 3 & 2", 4 | 3 & 2, 0);
 	ret = ret && test("1 | 1 ^ 1", 1 | 1 ^ 1, 0);
+
+	// &&, ||
+	ret = ret && test("1 && 1", 1 && 1, 0);
+	ret = ret && test("0 && 1", 0 && 1, 0);
+	ret = ret && test("0 && 0", 0 && 0, 0);
+	ret = ret && test("1 || 1", 1 || 1, 0);
+	ret = ret && test("0 || 1", 0 || 1, 0);
+	ret = ret && test("0 || 0", 0 || 0, 0);
+
+	ret = ret && test("1 ^ 1 && 1", 1 ^ 1 && 1, 0);
+	ret = ret && test("1 ^ 0 && 1", 1 ^ 0 && 1, 0);
+	ret = ret && test("1 ^ 0 && 0", 1 ^ 0 && 0, 0);
+	ret = ret && test("1 ^ 1 || 1", 1 ^ 1 || 1, 0);
+	ret = ret && test("1 ^ 0 || 1", 1 ^ 0 || 1, 0);
+	ret = ret && test("1 ^ 0 || 0", 1 ^ 0 || 0, 0);
+
+	ret = ret && test("c = 1 && 1", 1 && 1, 0);
+	ret = ret && test("c = 0 && 1", 0 && 1, 0);
+	ret = ret && test("c = 0 && 0", 0 && 0, 0);
+	ret = ret && test("c = 1 || 1", 1 || 1, 0);
+	ret = ret && test("c = 0 || 1", 0 || 1, 0);
+	ret = ret && test("c = 0 || 0", 0 || 0, 0);
+
+	ret = ret && test("1 || 1 && 0", 1 || 1 && 0, 0);
 	return ret ? 0 : 1;
 }
